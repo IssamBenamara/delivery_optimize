@@ -16,6 +16,19 @@ def example():
 		print(data)
 		return f"The data you sent is: {data}"
 
+@app.route('/optimize_route', methods=['POST'])
+def optimize_route():
+	response = request.json
+	latlongs = response['latlongs'].split(' , ')
+	lats = list()
+	longs = list()
+	for i in range(0, len(latlongs), 2):
+		lats.append(latlongs[i])
+		longs.append(latlongs[i+1])
+	print(lats)
+	print(longs)
+	
+
 @app.route("/about")
 def about():
 	return "HELLO about"
