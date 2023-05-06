@@ -34,7 +34,7 @@ def optimize_route():
 def read_orders_ids():
 	response = request.json
 	date = response['orders_ids']
-	print(date)
+	print(response)
 	return 'Success'
 
 @app.route("/about")
