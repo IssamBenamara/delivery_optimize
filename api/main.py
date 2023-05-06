@@ -20,6 +20,7 @@ def example():
 def optimize_route():
 	response = request.json
 	latlongs = response['latlongs'].split(' , ')
+	print(latlongs)
 	lats = list()
 	longs = list()
 	for i in range(0, len(latlongs), 2):
