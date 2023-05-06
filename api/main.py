@@ -30,10 +30,10 @@ def optimize_route():
 	print(longs)
 	return 'Success'
 
-@app.route('/read_date', methods=['POST'])
-def read_date():
+@app.route('/read_orders_ids', methods=['POST'])
+def read_orders_ids():
 	response = request.json
-	date = response['delivery_date']
+	date = response['orders_ids']
 	print(date)
 	return 'Success'
 
