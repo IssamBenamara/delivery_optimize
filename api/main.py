@@ -50,7 +50,7 @@ def about():
 	return "HELLO about"
 
 
-def heavy_calc(reponse):
+def heavy_calc(response):
 	
 	delivery_date = response['delivery_day']
 	delivery_time = response['delivery_start_time'][:5]
