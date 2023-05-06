@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from itertools import permutations
+import requests
 import json
 
 app = Flask(__name__)
@@ -168,5 +169,35 @@ def heavy_calc(response):
 	first_row = pd.DataFrame.from_dict({'order_id': ['Depart Rouiba'], 'arrival_time': [best_arrival_times[0].strftime('%H:%M')]}, orient='columns')
 	last_row = pd.DataFrame.from_dict({'order_id': ['Retour Rouiba'], 'arrival_time': [best_arrival_times[-1].strftime('%H:%M')]}, orient='columns')
 	optimized_route = pd.concat([first_row, tmp, last_row]).fillna('')
+	opti = optimized_route.iloc[1:-1].reset_index(drop=True)
 
-	return optimized_route.iloc[1:-1].to_json(orient='index')
+	rows = list()
+	for i, row in opti.iterrows():
+		tmp_row = {
+			"order_id": row['order_id'],
+			"delivery_date": delivery_date,
+			"delivery_seq_index": i+1,
+			"arrival_time": row['arrival_time']
+		}
+		rows.append(tmp_row)
+
+	app_id = os.environ['appsheet_app_id']
+	access_key = os.environ['appsheet_access_key']
+	table_name = "delivery_routes"
+	appsheet_url = f"https://api.appsheet.com/api/v2/apps/{app_id}/tables/{table_name}/Action?applicationAccessKey={access_key}"
+	body = {
+	"Action": "Add",
+	"Properties": {
+	"Locale": "fr-FR",
+	"Location": "47.623098, -122.330184",
+	"Timezone": "Pacific Standard Time"
+	},
+	"Rows": rows
+	}
+
+	res = requests.post(url=appsheet_url, json=body)
+	if res.status_code != 200:
+		print('Error: during inserting results in appsheet table')
+		return 'No Optimization'
+	print("Success")
+	return "Success"
