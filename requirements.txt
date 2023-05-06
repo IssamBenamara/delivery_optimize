@@ -1,2 +1,4 @@
 Flask==2.2.2
 googlemaps==4.10.0
+pandas
+numpy
