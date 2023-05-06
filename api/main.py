@@ -10,7 +10,7 @@ def home():
 @app.route('/example', methods=['POST'])
 def example():
 	response = request.json
-	print(json.loads(response))
+	print(response, type(response))
 	if request.method == 'POST':
 		data = request.form.getlist('data')
 		print(data)
