@@ -1,4 +1,6 @@
 from flask import Flask,request
+import json
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -7,8 +9,8 @@ def home():
 
 @app.route('/example', methods=['POST'])
 def example():
-	inpu = request.form.get('data')
-	print(inpu)
+	response = request.json
+	print(json.loads(response))
 	if request.method == 'POST':
 		data = request.form.getlist('data')
 		print(data)
