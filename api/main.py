@@ -23,9 +23,10 @@ def optimize_route():
 	print(latlongs)
 	lats = list()
 	longs = list()
-	for i in range(0, len(latlongs), 2):
-		lats.append(latlongs[i])
-		longs.append(latlongs[i+1])
+	for latlong in latlongs:
+		lat, long = latlong.split(',')
+		lats.append(lat.strip())
+		longs.append(long.strip())
 	print(lats)
 	print(longs)
 	
