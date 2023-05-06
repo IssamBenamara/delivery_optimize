@@ -7,6 +7,8 @@ def home():
 
 @app.route('/example', methods=['POST'])
 def example():
+    inpu = request.form['data']
+    print(inpu)
     if request.method == 'POST':
         data = request.form.getlist('data')
         print(data)
